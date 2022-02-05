@@ -5,14 +5,31 @@ import { ColorName, getColor } from '~/palette';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import Typography from '../Typography';
 
 type Props = HookFormComponent & {
   min: number,
   max: number,
   step: number,
+  unit?: string,
   defaultValue: number,
   colorName?: ColorName,
 };
+
+const calcTranslateX = (width: number, percentile: number) => {
+  return (width - 32) * (percentile/100) + 16;
+};
+
+const Wrapper = styled.div``;
+
+const TextWrapper = styled.div`
+  display: flex;
+  margin-bottom: 8px;
+`;
+
+const StyledTypography = styled(Typography)`
+  transform: translateX(${({ shiftX }) => `calc(${shiftX}px - 50%)`});
+`;
 
 const StyledRangeInput = styled.input.attrs({
   type: 'range',
@@ -47,25 +64,47 @@ const VerticalRangeInput: React.FC<Props> = ({
   min,
   max,
   step,
+  unit,
   defaultValue,
   ...rest
 }) => {
+  const [value, setValue] = useState(defaultValue);
   const [percentile, setPercentile] = useState((defaultValue-min)/(max-min)*100);
+  const [textTranslateX, setTextTranslateX] = useState(0);
   const onChange = (e) => {  
     const { onChange } = register(name);
     setPercentile(((e.target.value-min)/(max-min))*100);
+    setValue(e.target.value);
     onChange(e);
   };
+  const ref = useRef(null)
 
-  return <StyledRangeInput
-    colorName={colorName}
-    percentile={percentile}
-    {...register(name)}
-    onChange={onChange}
-    min={min}
-    max={max}
-    step={step}
-  />
+  useEffect(() => {
+    const x = calcTranslateX(ref.current && ref.current.offsetWidth, percentile);
+    setTextTranslateX(x);
+  }, [ref.current, percentile])
+
+  return (
+    <Wrapper ref={ref}>
+      <TextWrapper>
+        <StyledTypography
+          variant='header'
+          bold
+          color={colorName}
+          shiftX={textTranslateX}
+        >{value}{unit}</StyledTypography>
+      </TextWrapper>
+      <StyledRangeInput
+        colorName={colorName}
+        percentile={percentile}
+        {...register(name)}
+        onChange={onChange}
+        min={min}
+        max={max}
+        step={step}
+      />
+    </Wrapper>
+  );
 };
 
 export default VerticalRangeInput;

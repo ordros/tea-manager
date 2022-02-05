@@ -10,31 +10,35 @@ import VerticalRangeInput from './components/VerticalRangeInput';
 
 const Root = styled.div`
   background: #D6D6D6;
-  // padding: 8px;
   @media (max-width: 600px) {
     min-width: auto;
   }
   height: 100vh;
-  width: 500px;
-  padding: 0 16px;
+  width: calc(375px - 32px);
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const App: React.FC<any> = () => {
 
   const defaultValues = {
-    text: 'a',
-    range: 20,
+    text: 'ダージリン',
+    waterAmount: 100,
+    leafAmount: 1.5,
   };
+  const { register, watch } = useForm({ defaultValues });
+  // document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
   return (
     <Root>
-      <HookForm
-        defaultValues={defaultValues}
-      >
-        <TextInput name="text" />
-        <VerticalRangeInput name="range" min={10} max={100} step={10} defaultValue={defaultValues.range}/>
-      </HookForm>
+      <TextInput register={register} name="text" />
+      <VerticalRangeInput register={register} name="leafAmount" min={1} max={4} step={0.5} unit="g" colorName={'tea-leaf1'} defaultValue={defaultValues.leafAmount}/>
+      <VerticalRangeInput register={register} name="waterAmount" min={100} max={400} step={10} unit="ml" colorName={'water'} defaultValue={defaultValues.waterAmount}/>
+      <>
+        {watch('text')}, {watch('leafAmount')}, {watch('waterAmount')}
+      </>
     </Root>
   );
 };
