@@ -9,7 +9,17 @@
     "paths": {
       "~/*": ["src/*"],
     },
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        // TODO ルールをまともにする ref: https://github.com/Microsoft/typescript-styled-plugin#linting
+        "lint": {
+          "vendorPrefix": "error",
+          "zeroUnits": "warning"
+        }
+      }
+    ]
   },
   "include": [
     "src",
