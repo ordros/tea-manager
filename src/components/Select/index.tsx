@@ -30,6 +30,10 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
+const StyledTypography = styled(Typography)`
+  height: 40px;
+`;
+
 const Select: React.FC<Props> = ({
   register,
   name,
@@ -80,7 +84,7 @@ const Select: React.FC<Props> = ({
         <IconWrapper onClick={onClickUp}>
           <StyledIcon variant="arrowUp" disabled={!isLoop && values.indexOf(value) === 0}/>
         </IconWrapper>
-        <Typography variant="body" color="black" bold>{value}</Typography>
+        <StyledTypography variant="body" color="black" bold>{value}</StyledTypography>
         <IconWrapper onClick={onClickDown}>
           <StyledIcon variant="arrowDown" disabled={!isLoop && values.indexOf(value) === values.length - 1} />
         </IconWrapper>

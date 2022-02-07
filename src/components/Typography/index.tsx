@@ -1,15 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { StyledComponentProps } from '~/common';
 import { ColorName, getColor } from '~/palette';
 
 type TextStyles = 'body' | 'body2' | 'header'; 
 
-type Props = {
+type Props = StyledComponentProps & {
   children: React.ReactNode,
   variant: TextStyles
   bold?: boolean,
   color?: ColorName,
-  className?: string,
 }
 
 const getFontSize = (variant: TextStyles) => {
@@ -35,11 +35,11 @@ const StyledP = styled.p<{bold: boolean, color: ColorName, variant: TextStyles}>
 `;
 
 const Typography: React.FC<Props> = ({
+  className,
   children,
   variant,
   bold,
   color = 'gray1',
-  className,
 }) => {
   return <StyledP className={className} bold={bold} variant={variant} color={color}>{children}</StyledP>
 };

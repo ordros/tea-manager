@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HookFormComponent } from '~/common';
+import { HookFormComponent, StyledComponentProps } from '~/common';
 import styled from 'styled-components';
 import { ColorName, getColor } from '~/palette';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import Typography from '../Typography';
 
-type Props = HookFormComponent & {
+type Props = HookFormComponent & StyledComponentProps & {
   min: number,
   max: number,
   step: number,
@@ -59,6 +59,7 @@ const StyledRangeInput = styled.input.attrs({
 `;
 
 const Slider: React.FC<Props> = ({
+  className,
   register,
   name,
   colorName = 'tea-leaf1',
@@ -86,7 +87,7 @@ const Slider: React.FC<Props> = ({
   }, [ref.current, percentile])
 
   return (
-    <Wrapper ref={ref}>
+    <Wrapper ref={ref} className={className}>
       <TextWrapper>
         <StyledTypography
           variant='header'
