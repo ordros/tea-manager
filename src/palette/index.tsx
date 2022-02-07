@@ -3,6 +3,7 @@ enum Color {
   'water' = '#6563FF',
   'gray1' = '#757575',
   'black' = '#000',
+  'transparent' = 'transparent',
 }
 
 export type ColorName = keyof typeof Color;

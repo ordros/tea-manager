@@ -5,6 +5,6 @@ export type HookFormComponent = {
   name: string,
 };
 
-export type StyledComponent = {
+export type StyledComponentProps = {
   className?: string,
 };

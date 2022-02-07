@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { StyledComponent } from '~/common';
-import { ColorName } from '~/palette';
+import { StyledComponentProps } from '~/common';
 
 import ArrowUpIcon from './svg/arrow_up.svg';
 import ArrowDownIcon from './svg/arrow_down.svg';
+import WatchIcon from './svg/watch.svg';
+import WaterIcon from './svg/water.svg';
+import { ColorName, getColor } from '~/palette';
 
 enum IconSize {
   's' = '16px',
@@ -13,24 +15,30 @@ enum IconSize {
 
 type IconSizeName = keyof typeof IconSize;
 
-type IconType = 'arrowUp' | 'arrowDown';
+type IconType = 'arrowUp' | 'arrowDown' | 'watch' | 'water';
 
-type Props = StyledComponent & {
+type Props = StyledComponentProps & {
   size?: IconSizeName,
+  color?: ColorName,
   variant: IconType,
 };
 
 const Icon: React.FC<Props> = ({
   className,
   size,
+  color = 'transparent',
   variant,
 }) => {
   switch (variant) {
     case 'arrowUp':
-      return <ArrowUpIcon className={className} />;
+      return <ArrowUpIcon style={{fill: getColor(color)}} className={className} />;
     case 'arrowDown':
-      return <ArrowDownIcon className={className} />
-  }
+      return <ArrowDownIcon style={{fill: getColor(color)}}  className={className} />;
+    case 'watch':
+      return <WatchIcon style={{fill: getColor(color)}}  className={className} />;
+    case 'water':
+      return <WaterIcon style={{fill: getColor(color)}}  className={className} />;
+  };
 };
 
 export default Icon;
