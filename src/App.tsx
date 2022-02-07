@@ -1,11 +1,12 @@
-import { watch } from 'fs';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import HookForm from './components/HookForm';
+import Icon from './components/Icon';
 import TextInput from './components/TextInput';
+import Typography from './components/Typography';
 import VerticalRangeInput from './components/VerticalRangeInput';
 
 const Root = styled.div`
@@ -26,6 +27,10 @@ const StyledTextInput = styled(TextInput)`
   margin-top: 24px;
 `;
 
+const StyledIcon = styled(Icon)`
+  stroke: #000;
+`;
+
 const App: React.FC<any> = () => {
 
   const defaultValues = {
@@ -44,6 +49,9 @@ const App: React.FC<any> = () => {
       <>
         {watch('text')}, {watch('leafAmount')}, {watch('waterAmount')}
       </>
+      <StyledIcon variant="arrowUp" />
+      <Typography variant="body" bold>3</Typography>
+      <StyledIcon variant="arrowDown" />
     </Root>
   );
 };

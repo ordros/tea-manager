@@ -37,7 +37,7 @@ const IndexesWrapper = styled.div`
   background: gray;
 `;
 
-const IndexWrapper = styled.div`
+const IndexWrapper = styled.div<{marginBottom: number}>`
   height: ${LABEL_HEIGHT}px;
   border-radius: 4px;
   margin: 4px;

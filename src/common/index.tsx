@@ -4,3 +4,7 @@ export type HookFormComponent = {
   register?: (name: string) => UseFormRegisterReturn,
   name: string,
 };
+
+export type StyledComponent = {
+  className?: string,
+};

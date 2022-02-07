@@ -19,6 +19,10 @@
           "zeroUnits": "warning"
         }
       }
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
     ]
   },
   "include": [

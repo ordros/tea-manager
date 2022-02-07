@@ -33,6 +33,22 @@ module.exports = {
         loader: 'ts-loader',
       },
     },
+    {
+      test: /\.svg$/,
+      use: [
+        "babel-loader",
+        {
+          loader: 'react-svg-loader',
+          options: {
+            svgo: {
+              plugins: [
+                { removeViewBox: false },
+              ],
+            },
+          },
+        },
+      ],
+    }
     ],
   },
   resolve: {

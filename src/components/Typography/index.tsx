@@ -15,14 +15,15 @@ type Props = {
 const getFontSize = (variant: TextStyles) => {
   switch(variant) {
     case 'body':
+      return '34px';
     case 'body2':
     case 'header':
       return '20px';
   }
 };
 
-const StyledP = styled.p`
-  font-family: "Work Sans", serif;
+const StyledP = styled.p<{bold: boolean, color: ColorName, variant: TextStyles}>`
+  font-family: "Work Sans";
   font-style: normal;
   font-weight: ${({ bold }) => bold ? 'bold' : 'normal'};
   font-size: ${({ variant }) => getFontSize(variant)};

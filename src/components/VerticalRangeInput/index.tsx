@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HookFormComponent } from '~/types';
+import { HookFormComponent } from '~/common';
 import styled from 'styled-components';
 import { ColorName, getColor } from '~/palette';
 import { useState } from 'react';
