@@ -22,7 +22,7 @@ const getFontSize = (variant: TextStyles) => {
 };
 
 const StyledP = styled.p`
-  font-family: Work Sans;
+  font-family: "Work Sans", serif;
   font-style: normal;
   font-weight: ${({ bold }) => bold ? 'bold' : 'normal'};
   font-size: ${({ variant }) => getFontSize(variant)};

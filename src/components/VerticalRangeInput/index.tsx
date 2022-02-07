@@ -27,22 +27,22 @@ const TextWrapper = styled.div`
   margin-bottom: 8px;
 `;
 
-const StyledTypography = styled(Typography)`
+const StyledTypography = styled(Typography)<{shiftX: number}>`
   transform: translateX(${({ shiftX }) => `calc(${shiftX}px - 50%)`});
 `;
 
 const StyledRangeInput = styled.input.attrs({
   type: 'range',
-})`
+})<{colorName: ColorName, percentile: number}>`
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
-  background: 
-  ${({ colorName, percentile }) => `linear-gradient(to right, ${getColor(colorName)} ${percentile}%, ${getColor(colorName)}66 ${percentile}%)`};
+  background: ${({ colorName, percentile }) => `linear-gradient(to right, ${getColor(colorName)} ${percentile}%, ${getColor(colorName)}66 ${percentile}%)`};
   height: 18px;
   width: 100%;
-  border-radius: 2px;
+  border-radius: 8px;
   border: none;
+
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     background: #fff;
@@ -50,10 +50,11 @@ const StyledRangeInput = styled.input.attrs({
     height: 32px;
     border-radius: 50%;
     border: 2px solid ${getColor('gray1')};
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
   }
+
   &:active::-webkit-slider-thumb {
-    box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.8);
   }
 `;
 

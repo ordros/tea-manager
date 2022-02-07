@@ -13,12 +13,17 @@ const Root = styled.div`
   @media (max-width: 600px) {
     min-width: auto;
   }
-  height: 100vh;
-  width: calc(375px - 32px);
+  height: 678px;
+  // width: calc(375px - 32px);
+  // width: 100vw;
   padding: 0 24px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+`;
+
+const StyledTextInput = styled(TextInput)`
+  margin-top: 24px;
 `;
 
 const App: React.FC<any> = () => {
@@ -33,7 +38,7 @@ const App: React.FC<any> = () => {
 
   return (
     <Root>
-      <TextInput register={register} name="text" />
+      <StyledTextInput register={register} name="text" />
       <VerticalRangeInput register={register} name="leafAmount" min={1} max={4} step={0.5} unit="g" colorName={'tea-leaf1'} defaultValue={defaultValues.leafAmount}/>
       <VerticalRangeInput register={register} name="waterAmount" min={100} max={400} step={10} unit="ml" colorName={'water'} defaultValue={defaultValues.waterAmount}/>
       <>
