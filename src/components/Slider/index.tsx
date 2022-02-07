@@ -58,7 +58,7 @@ const StyledRangeInput = styled.input.attrs({
   }
 `;
 
-const VerticalRangeInput: React.FC<Props> = ({
+const Slider: React.FC<Props> = ({
   register,
   name,
   colorName = 'tea-leaf1',
@@ -108,4 +108,4 @@ const VerticalRangeInput: React.FC<Props> = ({
   );
 };
 
-export default VerticalRangeInput;
+export default Slider;
