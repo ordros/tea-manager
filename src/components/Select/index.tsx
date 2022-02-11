@@ -40,6 +40,10 @@ const StyledTypography = styled(Typography)`
   height: 40px;
 `;
 
+interface SelectChangeEvent extends React.ChangeEvent {
+  target: HTMLSelectElement,
+};
+
 const SelectInner: React.FC<InnerProps> = ({
   values,
   isLoop,
@@ -55,9 +59,9 @@ const SelectInner: React.FC<InnerProps> = ({
       }
       index = values.length;
     }
-    // 型パズルが辛いのでサボる
-    e.target.value = values[index - 1];
-    onChange(e);
+    const event = e as SelectChangeEvent;
+    event.target.value = values[index - 1];
+    onChange(event);
   };
 
   const onClickDown = (e) => {
@@ -68,9 +72,9 @@ const SelectInner: React.FC<InnerProps> = ({
       }
       index = -1;
     }
-    // 型パズルが辛いのでサボる
-    e.target.value = values[index + 1];
-    onChange(e);
+    const event = e as SelectChangeEvent;
+    event.target.value = values[index + 1];
+    onChange(event);
   };
 
   return (
