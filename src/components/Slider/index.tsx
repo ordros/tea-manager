@@ -1,26 +1,34 @@
 import * as React from 'react';
-import { HookFormComponent, StyledComponentProps } from '~/common';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { HookFormControledComponent, StyledComponentProps } from '~/common';
 import { ColorName, getColor } from '~/palette';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
-import Typography from '../Typography';
+import Typography from '~/components/Typography';
+import { RefCallBack, useController } from 'react-hook-form';
 
-type Props = HookFormComponent & StyledComponentProps & {
+type ComponentProps = StyledComponentProps & {
   min: number,
   max: number,
   step: number,
   unit?: string,
-  defaultValue: number,
   colorName?: ColorName,
 };
+
+type InnerProps = ComponentProps & {
+  inputRef: RefCallBack,
+  value: number,
+  onChange: React.ChangeEventHandler,
+};
+
+type Props = HookFormControledComponent & ComponentProps;
 
 const calcTranslateX = (width: number, percentile: number) => {
   return (width - 32) * (percentile/100) + 16;
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+`;
 
 const TextWrapper = styled.div`
   display: flex;
@@ -58,33 +66,26 @@ const StyledRangeInput = styled.input.attrs({
   }
 `;
 
-const Slider: React.FC<Props> = ({
+const SliderInner: React.FC<InnerProps> = ({
   className,
-  register,
-  name,
+  value,
+  inputRef,
+  onChange,
   colorName = 'tea-leaf1',
   min,
   max,
   step,
   unit,
-  defaultValue,
-  ...rest
 }) => {
-  const [value, setValue] = useState(defaultValue);
-  const [percentile, setPercentile] = useState((defaultValue-min)/(max-min)*100);
+  const ref = useRef(null);
+  const [percentile, setPercentile] = useState((value-min)/(max-min)*100);
   const [textTranslateX, setTextTranslateX] = useState(0);
-  const onChange = (e) => {  
-    const { onChange } = register(name);
-    setPercentile(((e.target.value-min)/(max-min))*100);
-    setValue(e.target.value);
-    onChange(e);
-  };
-  const ref = useRef(null)
 
   useEffect(() => {
+    setPercentile((value-min)/(max-min)*100)
     const x = calcTranslateX(ref.current && ref.current.offsetWidth, percentile);
     setTextTranslateX(x);
-  }, [ref.current, percentile])
+  });
 
   return (
     <Wrapper ref={ref} className={className}>
@@ -97,15 +98,36 @@ const Slider: React.FC<Props> = ({
         >{value}{unit}</StyledTypography>
       </TextWrapper>
       <StyledRangeInput
+        ref={inputRef}
         colorName={colorName}
         percentile={percentile}
-        {...register(name)}
-        onChange={onChange}
+        value={value}
         min={min}
         max={max}
         step={step}
+        onChange={onChange}
       />
     </Wrapper>
+  );
+};
+
+const Slider: React.FC<Props> = ({
+  className,
+  control,
+  name,
+  ...restProps
+}) => {
+  const {
+    field: { ref, ...restFields },
+    formState: {},
+  } = useController({ name, control });
+
+  return (
+    <SliderInner
+      inputRef={ref}
+      {...restProps}
+      {...restFields}
+    />
   );
 };
 

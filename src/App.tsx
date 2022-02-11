@@ -16,8 +16,6 @@ const Root = styled.div`
     min-width: auto;
   }
   height: 678px;
-  // width: calc(375px - 32px);
-  // width: 100vw;
   padding: 0 24px;
   display: flex;
   flex-direction: column;
@@ -57,37 +55,29 @@ const App: React.FC<any> = () => {
 
   const defaultValues = {
     text: 'ダージリン',
-    waterAmount: 100,
-    leafAmount: 1.5,
+    waterAmount: 200,
+    leafAmount: 3.5,
     cup: 1,
     teaType: 'ストレート',
   };
   const { register, watch, setValue, control } = useForm({ defaultValues });
-  // document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
-
-  const setCupValue = (value: string) => {
-    setValue('cup', parseInt(value));
-  };
-  const setCupLoopValue = (value: string) => {
-    setValue('teaType', value);
-  };
 
   return (
     <Root>
       <StyledTextInput register={register} name="text" />
       <SliderWrapper>
         <WaterIcon variant="water" color="water" />
-        <StyledSlider register={register} name="waterAmount" min={100} max={400} step={10} unit="ml" colorName={'water'} defaultValue={defaultValues.waterAmount}/>
+        <StyledSlider control={control} name="waterAmount" min={100} max={400} step={10} unit="ml" colorName={'water'}/>
       </SliderWrapper>
       <SliderWrapper>
         <WatchIcon variant="watch" color="tea-leaf1" />
-        <StyledSlider register={register} name="leafAmount" min={1} max={4} step={0.5} unit="g" colorName={'tea-leaf1'} defaultValue={defaultValues.leafAmount}/>
+        <StyledSlider control={control} name="leafAmount" min={1} max={4} step={0.5} unit="g" colorName={'tea-leaf1'} />
       </SliderWrapper>
       <Select control={control} name="cup" values={['1', '2', '3', '4', '5']}  />
       <Select control={control} name="teaType" values={['ストレート', 'アイス', 'ミルク']} isLoop />
-      <>
+      <div>
         {watch('text')}, {watch('leafAmount')}, {watch('waterAmount')}, {watch('cup')}, {watch('teaType')}
-      </>
+      </div>
     </Root>
   );
 };
