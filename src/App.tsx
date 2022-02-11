@@ -62,7 +62,7 @@ const App: React.FC<any> = () => {
     cup: 1,
     teaType: 'ストレート',
   };
-  const { register, watch, setValue } = useForm({ defaultValues });
+  const { register, watch, setValue, control } = useForm({ defaultValues });
   // document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
 
   const setCupValue = (value: string) => {
@@ -83,8 +83,8 @@ const App: React.FC<any> = () => {
         <WatchIcon variant="watch" color="tea-leaf1" />
         <StyledSlider register={register} name="leafAmount" min={1} max={4} step={0.5} unit="g" colorName={'tea-leaf1'} defaultValue={defaultValues.leafAmount}/>
       </SliderWrapper>
-      <Select register={register} name="cup" values={['1', '2', '3', '4', '5']} setSelectValue={setCupValue} />
-      <Select register={register} name="teaType" values={['ストレート', 'アイス', 'ミルク']} setSelectValue={setCupLoopValue} isLoop />
+      <Select control={control} name="cup" values={['1', '2', '3', '4', '5']}  />
+      <Select control={control} name="teaType" values={['ストレート', 'アイス', 'ミルク']} isLoop />
       <>
         {watch('text')}, {watch('leafAmount')}, {watch('waterAmount')}, {watch('cup')}, {watch('teaType')}
       </>
