@@ -78,11 +78,11 @@ const SliderInner: React.FC<InnerProps> = ({
   unit,
 }) => {
   const ref = useRef(null);
-  const [percentile, setPercentile] = useState((value-min)/(max-min)*100);
-  const [textTranslateX, setTextTranslateX] = useState(0);
+  const [percentile, setPercentile] = useState(((value || min)-min)/(max-min)*100);
+  const [textTranslateX, setTextTranslateX] = useState(null);
 
   useEffect(() => {
-    setPercentile((value-min)/(max-min)*100)
+    setPercentile(((value || min)-min)/(max-min)*100)
     const x = calcTranslateX(ref.current && ref.current.offsetWidth, percentile);
     setTextTranslateX(x);
   });
@@ -95,13 +95,15 @@ const SliderInner: React.FC<InnerProps> = ({
           bold
           color={colorName}
           shiftX={textTranslateX}
-        >{value}{unit}</StyledTypography>
+        >
+          {value || '- '}{unit}
+        </StyledTypography>
       </TextWrapper>
       <StyledRangeInput
         ref={inputRef}
         colorName={colorName}
         percentile={percentile}
-        value={value}
+        value={value || 0}
         min={min}
         max={max}
         step={step}

@@ -6,6 +6,7 @@ import ArrowDownIcon from './svg/arrow_down.svg';
 import WatchIcon from './svg/watch.svg';
 import WaterIcon from './svg/water.svg';
 import { ColorName, getColor } from '~/palette';
+import styled, { css } from 'styled-components';
 
 enum IconSize {
   's' = '16px',
@@ -23,22 +24,38 @@ type Props = StyledComponentProps & {
   variant: IconType,
 };
 
+const Wrapper = styled.div<{size: string}>`
+  ${({ size }) => css`
+    width: ${size};
+    height: ${size};
+  `}
+`;
+
+const getIcon = (variant: IconType, color: ColorName) => {
+  switch (variant) {
+    case 'arrowUp':
+      return <ArrowUpIcon style={{fill: getColor(color)}} />;
+    case 'arrowDown':
+      return <ArrowDownIcon style={{fill: getColor(color)}} />;
+    case 'watch':
+      return <WatchIcon style={{fill: getColor(color)}} />;
+    case 'water':
+      return <WaterIcon style={{fill: getColor(color)}} />;
+  };
+}
+
 const Icon: React.FC<Props> = ({
   className,
   size,
   color = 'transparent',
   variant,
 }) => {
-  switch (variant) {
-    case 'arrowUp':
-      return <ArrowUpIcon style={{fill: getColor(color)}} className={className} />;
-    case 'arrowDown':
-      return <ArrowDownIcon style={{fill: getColor(color)}}  className={className} />;
-    case 'watch':
-      return <WatchIcon style={{fill: getColor(color)}}  className={className} />;
-    case 'water':
-      return <WaterIcon style={{fill: getColor(color)}}  className={className} />;
-  };
+  return (
+    <Wrapper size={size && IconSize[size]} className={className}>
+      { getIcon(variant, color) }
+    </Wrapper>
+  )
+  
 };
 
 export default Icon;

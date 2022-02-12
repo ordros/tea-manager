@@ -4,6 +4,8 @@ enum Color {
   'gray1' = '#757575',
   'black' = '#000',
   'transparent' = 'transparent',
+  'white' = '#fff',
+  'warning' = 'red',
 }
 
 export type ColorName = keyof typeof Color;

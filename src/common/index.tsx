@@ -1,7 +1,7 @@
-import { Control, UseFormRegisterReturn } from 'react-hook-form';
+import { Control, RegisterOptions, UseFormRegisterReturn } from 'react-hook-form';
 
 export type HookFormComponent = {
-  register?: (name: string) => UseFormRegisterReturn,
+  register?: (name: string, options?: RegisterOptions) => UseFormRegisterReturn,
   name: string,
 };
 

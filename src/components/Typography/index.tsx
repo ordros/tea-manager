@@ -17,13 +17,14 @@ const getFontSize = (variant: TextStyles) => {
     case 'body':
       return '34px';
     case 'body2':
+      return '16px';
     case 'header':
       return '20px';
   }
 };
 
-const StyledP = styled.p<{bold: boolean, color: ColorName, variant: TextStyles}>`
-  font-family: "Work Sans";
+const StyledDiv = styled.div<{bold: boolean, color: ColorName, variant: TextStyles}>`
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
   font-style: normal;
   font-weight: ${({ bold }) => bold ? 'bold' : 'normal'};
   font-size: ${({ variant }) => getFontSize(variant)};
@@ -41,7 +42,7 @@ const Typography: React.FC<Props> = ({
   bold,
   color = 'gray1',
 }) => {
-  return <StyledP className={className} bold={bold} variant={variant} color={color}>{children}</StyledP>
+  return <StyledDiv className={className} bold={bold} variant={variant} color={color}>{children}</StyledDiv>
 };
 
 export default Typography;

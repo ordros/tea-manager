@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { FieldValues, RefCallBack, useController } from 'react-hook-form';
+import { RefCallBack, useController } from 'react-hook-form';
 import styled from 'styled-components';
-import { HookFormControledComponent } from '~/common';
+import { HookFormControledComponent, StyledComponentProps } from '~/common';
 import Icon from '../Icon';
 import Typography from '../Typography';
 
-type ComponentProps = {
+type ComponentProps = StyledComponentProps & {
   values: string[],
+  defaultValue?: string,
   isLoop?: boolean,
 };
 
@@ -19,10 +20,6 @@ type InnerProps = ComponentProps & {
 type Props = HookFormControledComponent & ComponentProps;
 
 const Root = styled.div``;
-
-const StyledSelect = styled.select`
-  /* display: none; */
-`;
 
 const IconWrapper = styled.div``;
 
@@ -45,19 +42,26 @@ interface SelectChangeEvent extends React.ChangeEvent {
 };
 
 const SelectInner: React.FC<InnerProps> = ({
+  className,
   values,
   isLoop,
   inputRef,
   value,
+  defaultValue = "-",
   onChange,
 }) => {
   const onClickUp = (e) => {
-    let index = values.indexOf(value.toString());
-    if (index < 1) {
-      if (!isLoop) {
-        return;
+    let index;
+    if (!value) {
+      index = values.length - 1;
+    } else {
+      index = values.indexOf(value.toString());
+      if (index < 1) {
+        if (!isLoop) {
+          return;
+        }
+        index = values.length;
       }
-      index = values.length;
     }
     const event = e as SelectChangeEvent;
     event.target.value = values[index - 1];
@@ -65,12 +69,17 @@ const SelectInner: React.FC<InnerProps> = ({
   };
 
   const onClickDown = (e) => {
-    let index = values.indexOf(value.toString());
-    if (index >= values.length - 1) {
-      if (!isLoop) {
-        return;
+    let index;
+    if (!value) {
+      return;
+    } else {
+      index = values.indexOf(value.toString());
+      if (index >= values.length - 1) {
+        if (!isLoop) {
+          return;
+        }
+        index = -1;
       }
-      index = -1;
     }
     const event = e as SelectChangeEvent;
     event.target.value = values[index + 1];
@@ -78,14 +87,14 @@ const SelectInner: React.FC<InnerProps> = ({
   };
 
   return (
-    <Root>
+    <Root className={className}>
       <Wrapper ref={inputRef}>
         <IconWrapper onClick={onClickUp}>
-          <StyledIcon variant="arrowUp" disabled={!isLoop && values.indexOf(value.toString()) === 0}/>
+          <StyledIcon variant="arrowUp" disabled={!isLoop && value && values.indexOf(value.toString()) === 0}/>
         </IconWrapper>
-        <StyledTypography variant="body" color="black" bold>{value}</StyledTypography>
+        <StyledTypography variant="body" color="black" bold>{value || defaultValue}</StyledTypography>
         <IconWrapper onClick={onClickDown}>
-          <StyledIcon variant="arrowDown" disabled={!isLoop && values.indexOf(value.toString()) === values.length - 1} />
+          <StyledIcon variant="arrowDown" disabled={!value || (!isLoop && value && values.indexOf(value.toString()) === values.length - 1)} />
         </IconWrapper>
       </Wrapper>
     </Root>
@@ -94,6 +103,7 @@ const SelectInner: React.FC<InnerProps> = ({
 
 
 const Select: React.FC<Props> = ({
+  className,
   control,
   name,
   values,
@@ -106,6 +116,7 @@ const Select: React.FC<Props> = ({
 
   return (
     <SelectInner
+      className={className}
       inputRef={ref} 
       values={values}
       isLoop={isLoop}
